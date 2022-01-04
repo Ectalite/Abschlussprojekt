@@ -8,21 +8,20 @@ void printmenue(void)
 	switch (sprogramdata.eprgstate)
 	{
 	case init:
-
+		printf("Current program state: init\n\n");
 		break;
 	case readdone:
-
+		printf("Current program state: readdone\n\n");
 		break;
 	case sortdone:
-
+		printf("Current program state: sortdone\n\n");
 		break;
 	case statdone:
-
+		printf("Current program state: statdone\n\n");
 		break;
 	default:
 		break;
 	}
-	printf("Current program state: %s\n\n", );
 	printf("MENUE:\n");
 	printf("-1- Read results from input file\n");
 	printf("-2- Output results\n");
