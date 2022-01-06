@@ -29,12 +29,12 @@ int readresults(char* pcfilename, struct result* psresult)
 				psresult->uirunsinlist++;
 			}
 		} while (pcReadStrReturn != NULL);
+		fclose(pFile);
 	}
 	else
 	{
 		return EXIT_FAILURE;
 	}
-	fclose(pFile);
 	pFile = NULL;
 	free(pcStartOfToken);
 	return EXIT_SUCCESS;
@@ -45,7 +45,20 @@ int saveresults(char* pcfilename, struct result sresult)
 	errno_t iErrorCode;
 	FILE* pFile = NULL;
 	iErrorCode = fopen_s(&pFile, pcfilename, "w");
-
+	if (iErrorCode == 0)
+	{
+		for (unsigned int ui = 0; ui < sresult.uirunsinlist; ui++)
+		{
+			fprintf(pFile, "%s;%s;%lf\n",sresult.asresultlist[ui].aclastname, sresult.asresultlist[ui].acfirstname, sresult.asresultlist[ui].dtime);
+		}
+		fclose(pFile);
+	}
+	else
+	{
+		return EXIT_FAILURE;
+	}
+	pFile = NULL;
+	return EXIT_SUCCESS;
 }
 
 

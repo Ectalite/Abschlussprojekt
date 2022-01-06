@@ -18,14 +18,19 @@ int main(int argc, char* argv[])
 		{
 		case '1':
 			iReturnFunction = readresults(sprogramdata.acinputfilename, &sresult);
-			if (iReturnFunction != 0) 
+			if (iReturnFunction != 0)
 			{
 				printf("Read failure");
 				iReturnValue = EXIT_FAILURE;
 			}
 			break;
 		case '2':
-
+			iReturnFunction = saveresults(sprogramdata.acoutputfilename, sresult);
+			if (iReturnFunction != 0)
+			{
+				printf("Write failure");
+				iReturnValue = EXIT_FAILURE;
+			}
 			break;
 		case '3':
 
