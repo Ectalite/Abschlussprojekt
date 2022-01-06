@@ -40,6 +40,7 @@ struct result
 };
 
 enum programstate { init = 0, readdone = 1, sortdone = 2, statdone = 3 };
+enum programerror { running = 2, error = 1, stop = 0};
 
 struct programdata
 {
@@ -64,8 +65,3 @@ void printprogramstate(struct programdata sprgdata);
 void printresults(struct result sresult);
 void printstatistics(struct statistics sstatistics);
 void enterfilename(char* psfilename);
-
-// Delaration application globals
-extern volatile sresult_t sresult;
-extern volatile sstatistics_t sstatistics;
-extern volatile sprogramdata_t sprogramdata;
