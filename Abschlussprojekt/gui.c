@@ -41,15 +41,43 @@ void printprogramstate(struct programdata sprgdata)
 
 void printresults(struct result sresult)
 {
-
+	system("cls");
+	printf("Lastname\t|\tName\t\t|\tRun time\n");
+	printf("_________________________________________________________\n");
+	for (unsigned int ui = 0; ui < sresult.uirunsinlist; ui++)
+	{
+		printf("%s", sresult.asresultlist[ui].aclastname); //Function is more complex because of the indentation
+		if (strlen(sresult.asresultlist[ui].aclastname) < 8)
+		{
+			printf("\t");
+		}
+		printf("\t|\t%s", sresult.asresultlist[ui].acfirstname);
+		if (strlen(sresult.asresultlist[ui].acfirstname) < 8)
+		{
+			printf("\t");
+		}
+		printf("\t|\t%lf\n", sresult.asresultlist[ui].dtime);
+	}
+	printf("Press any key to quit.");
+	(void)getchar(); //wait for a key
 }
 
 void printstatistics(struct statistics sstatistics)
 {
-
+	printf("STATISTICS:\n");
+	printf("Number of elements:\t\t%u\n", sstatistics.uielements);
+	printf("Distance's Mean:\t\t%lf\n", sstatistics.darithmeticmean);
+	printf("Median value:\t\t\t%lf\n", sstatistics.dmedianvalue);
+	printf("Range of distances:\t\t%lf\n", sstatistics.drange);
+	printf("Variance of distances:\t\t%lf\n",sstatistics.dvariance);
+	printf("Standard deviation of distances:\t%lf\n",sstatistics.dstandarddeviation);
+	printf("Press any key to quit.");
+	(void)getchar(); //wait for a key
 }
 
 void enterfilename(char* psfilename)
 {
-
+	printf("Please give a path to the file:\n");
+	scanf_s("%s", psfilename, MAXLENGTH_PATHFILE);
+	(void)getchar(); //remove enter character
 }

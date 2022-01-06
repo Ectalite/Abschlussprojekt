@@ -8,6 +8,8 @@
 //Header include
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 //Structs deklaration
 
@@ -65,3 +67,4 @@ void printprogramstate(struct programdata sprgdata);
 void printresults(struct result sresult);
 void printstatistics(struct statistics sstatistics);
 void enterfilename(char* psfilename);
+void vChoice(char cKey, int* piReturnValue, sprogramdata_t* psprogramdata, sresult_t* psresult, sstatistics_t* psstatistics);

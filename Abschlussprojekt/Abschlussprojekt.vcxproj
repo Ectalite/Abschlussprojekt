@@ -149,7 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fileio.c" />
-    <ClCompile Include="globals.c" />
     <ClCompile Include="gui.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="processing.c" />

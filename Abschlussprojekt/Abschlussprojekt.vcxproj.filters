@@ -32,8 +32,5 @@
     <ClCompile Include="gui.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="globals.c">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

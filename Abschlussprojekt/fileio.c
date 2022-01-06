@@ -33,7 +33,7 @@ int readresults(char* pcfilename, struct result* psresult)
 	}
 	else
 	{
-		return EXIT_FAILURE;
+		return -1;
 	}
 	pFile = NULL;
 	free(pcStartOfToken);
@@ -55,7 +55,7 @@ int saveresults(char* pcfilename, struct result sresult)
 	}
 	else
 	{
-		return EXIT_FAILURE;
+		return -1;
 	}
 	pFile = NULL;
 	return EXIT_SUCCESS;
