@@ -7,7 +7,13 @@ int main(int argc, char* argv[])
 	sprogramdata_t sprogramdata = { .acinputfilename = "c:\\temp\\input.txt", .acoutputfilename = "c:\\temp\\output.txt",.eprgstate = init };
 	char cChoice;
 	int iReturnValue = 2;
-	do 
+	int iReturnFunction;
+	iReturnFunction = iParameters(argc, argv, &sprogramdata);
+	if (iReturnFunction != 0)
+	{
+		return EXIT_FAILURE;
+	}
+	do
 	{
 		system("cls");
 		printprogramstate(sprogramdata);
@@ -100,5 +106,24 @@ void vChoice(char cKey, int *piReturnValue, sprogramdata_t *psprogramdata, sresu
 		printf("Press any key to continue.");
 		(void)getchar(); //wait for a key
 		break;
+	}
+}
+
+int iParameters(int argc, char* argv[], sprogramdata_t* psprogramdata)
+{
+	if (argc == 1)
+	{
+		return 0; 
+	}
+	else if (argc == 3)
+	{
+		strcpy_s(psprogramdata->acinputfilename, MAXLENGTH_PATHFILE, argv[1]);
+		strcpy_s(psprogramdata->acoutputfilename, MAXLENGTH_PATHFILE, argv[2]);
+		return 0;
+	}
+	else
+	{
+		printf("The amount of arguments is incorrect.\nPlease provide 0 or 2 parameters.");
+		return -1;
 	}
 }

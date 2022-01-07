@@ -68,3 +68,4 @@ void printresults(struct result sresult);
 void printstatistics(struct statistics sstatistics);
 void enterfilename(char* psfilename);
 void vChoice(char cKey, int* piReturnValue, sprogramdata_t* psprogramdata, sresult_t* psresult, sstatistics_t* psstatistics);
+int iParameters(int argc, char* argv[], sprogramdata_t* psprogramdata);
