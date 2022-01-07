@@ -9,7 +9,9 @@ int readresults(char* pcfilename, struct result* psresult)
 	char* pcStartOfToken = (char*)malloc(sizeof(char) * 255);
 	char* pcToken = NULL;
 	char* pcTokenNext = pcStartOfToken;
+	strncpy_s(pcTokenNext, 255, "", 254);
 	iErrorCode = fopen_s(&pFile, pcfilename, "r");
+	int iReturnValue = 0;
 	if (iErrorCode == 0)
 	{
 		do
@@ -18,26 +20,65 @@ int readresults(char* pcfilename, struct result* psresult)
 			if (pcReadStrReturn != NULL)
 			{
 				pcToken = strtok_s(acLine, ";", &pcTokenNext);
-				printf("%s\n", pcToken);
-				strncpy_s(psresult->asresultlist[psresult->uirunsinlist].aclastname, MAXLENGTH_NAMES, pcToken, MAXLENGTH_NAMES-1);
-				pcToken = strtok_s(NULL, ";", &pcTokenNext);
-				printf("%s\n", pcToken);
-				strncpy_s(psresult->asresultlist[psresult->uirunsinlist].acfirstname, MAXLENGTH_NAMES, pcToken, MAXLENGTH_NAMES-1);
-				pcToken = strtok_s(NULL, ";", &pcTokenNext);
-				printf("%s\n", pcToken);
-				psresult->asresultlist[psresult->uirunsinlist].dtime = strtod(pcToken, NULL);
-				psresult->uirunsinlist++;
+				if (pcToken != NULL && pcTokenNext != NULL)
+				{
+					printf("%s\n", pcToken);
+					strncpy_s(psresult->asresultlist[psresult->uirunsinlist].aclastname, MAXLENGTH_NAMES, pcToken, MAXLENGTH_NAMES - 1);
+					if (strcmp(psresult->asresultlist[psresult->uirunsinlist].aclastname, "") == 0)
+					{
+						printf("Nachname Token ist leer.");
+						iReturnValue = -1;
+					}
+					pcToken = strtok_s(NULL, ";", &pcTokenNext);
+					if (pcToken != NULL && pcTokenNext != NULL)
+					{
+						printf("%s\n", pcToken);
+						strncpy_s(psresult->asresultlist[psresult->uirunsinlist].acfirstname, MAXLENGTH_NAMES, pcToken, MAXLENGTH_NAMES - 1);
+						if (strcmp(psresult->asresultlist[psresult->uirunsinlist].acfirstname, "") == 0)
+						{
+							printf("Vorname Token ist leer.");
+							iReturnValue = -1;
+						}
+						pcToken = strtok_s(NULL, ";", &pcTokenNext);
+						if (pcToken != NULL  && pcTokenNext != NULL && strcmp(pcTokenNext,"\0") == 0)
+						{
+							printf("%s\n", pcToken);
+							psresult->asresultlist[psresult->uirunsinlist].dtime = strtod(pcToken, &pcToken);
+							if (strcmp(pcToken,"\n") != 0 && strcmp(pcToken, "\0") != 0)
+							{
+								printf("Die Zeit von %s %s ist nicht korrekt.", psresult->asresultlist[psresult->uirunsinlist].aclastname, psresult->asresultlist[psresult->uirunsinlist].acfirstname);
+								iReturnValue = -1;
+							}
+							psresult->uirunsinlist++;
+						}
+						else
+						{
+							printf("There is more than 3 Tokens.");
+							iReturnValue = -1;
+						}
+					}
+					else
+					{
+						printf("There is less than 3 Tokens.");
+						iReturnValue = -1;
+					}
+				}
+				else
+				{
+					printf("There is less than 3 Tokens.");
+					iReturnValue = -1;
+				}
 			}
 		} while (pcReadStrReturn != NULL);
 		fclose(pFile);
 	}
 	else
 	{
-		return -1;
+		iReturnValue = -1;
 	}
 	pFile = NULL;
 	free(pcStartOfToken);
-	return EXIT_SUCCESS;
+	return iReturnValue;
 }
 
 int saveresults(char* pcfilename, struct result sresult)
