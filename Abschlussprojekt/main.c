@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 	else if (iReturnFunction == 1)
 	{
 		printf("Reading file...");
-		iReturnFunction = readresults(sprogramdata.acinputfilename, *sresult);
+		iReturnFunction = readresults(sprogramdata.acinputfilename, &sresult);
 		sprogramdata.eprgstate = readdone;
 		if (iReturnFunction != 0)
 		{
