@@ -9,19 +9,60 @@ int main(int argc, char* argv[])
 	int iReturnValue = 2;
 	int iReturnFunction;
 	iReturnFunction = iParameters(argc, argv, &sprogramdata);
-	if (iReturnFunction != 0)
+	if (iReturnFunction == -1)
 	{
 		return EXIT_FAILURE;
 	}
-	do
+	else if (iReturnFunction == 1)
 	{
-		system("cls");
-		printprogramstate(sprogramdata);
-		printmenue();
-		scanf_s("%c",&cChoice,1);
-		(void)getchar(); //remove enter character
-		vChoice(cChoice, &iReturnValue, &sprogramdata, &sresult, &sstatistics);
-	} while (iReturnValue == 2);
+		printf("Reading file...");
+		iReturnFunction = readresults(sprogramdata->acinputfilename, sresult);
+		psprogramdata->eprgstate = readdone;
+		if (iReturnFunction != 0)
+		{
+			printf("Read failure");
+			*piReturnValue = EXIT_FAILURE;
+		}
+		iReturnFunction = sort(&sresult);
+		sprogramdata.eprgstate = sortdone;
+		if (iReturnFunction != 0)
+		{
+			printf("Sort failure");
+			iReturnValue = EXIT_FAILURE;
+		}
+		iReturnFunction = calcstatistics(sresult, &sstatistics);
+		sprogramdata.eprgstate = statdone;
+		if (iReturnFunction != 0)
+		{
+			printf("Statistics failure");
+			iReturnValue = EXIT_FAILURE;
+		}
+		else if (iReturnValue == 2)
+		{
+			printf("Programm executed correctly - passed parameters:\n");
+			iReturnValue = EXIT_SUCCESS;
+		}
+		else
+		{
+			printf("Programm had a problem - passed parameters:\n");
+		}
+		printf("%s", sprogramdata.acinputfilename);
+		printf("%s", sprogramdata.acoutputfilename);
+		printf("Press any key to finish!");
+		(void)getchar(); //wait for a key
+	}
+	else
+	{
+		do
+		{
+			system("cls");
+			printprogramstate(sprogramdata);
+			printmenue();
+			scanf_s("%c", &cChoice, 1);
+			(void)getchar(); //remove enter character
+			vChoice(cChoice, &iReturnValue, &sprogramdata, &sresult, &sstatistics);
+		} while (iReturnValue == 2);
+	}
 	return iReturnValue;
 }
 
@@ -48,7 +89,7 @@ void vChoice(char cKey, int *piReturnValue, sprogramdata_t *psprogramdata, sresu
 		psprogramdata->eprgstate = sortdone;
 		if (iReturnFunction != 0)
 		{
-			printf("Write failure");
+			printf("Sort failure");
 			*piReturnValue = EXIT_FAILURE;
 		}
 		break;
@@ -119,7 +160,7 @@ int iParameters(int argc, char* argv[], sprogramdata_t* psprogramdata)
 	{
 		strcpy_s(psprogramdata->acinputfilename, MAXLENGTH_PATHFILE, argv[1]);
 		strcpy_s(psprogramdata->acoutputfilename, MAXLENGTH_PATHFILE, argv[2]);
-		return 0;
+		return 1;
 	}
 	else
 	{
